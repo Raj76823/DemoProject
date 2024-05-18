@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 from Abstract.managers import BaseManager
-
+from User.models import User
 from django.conf import settings
 
 class BaseModel(models.Model):
@@ -13,7 +13,7 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, blank=True)
 
 
-    """
+    
     created_by = models.ForeignKey("User.User",related_name="%(class)s_created_by", on_delete=models.DO_NOTHING,blank=True)
     updated_by=models.ForeignKey("User.User",related_name="%(class)s_updated_by",on_delete=models.DO_NOTHING,blank=True)
     
@@ -26,7 +26,7 @@ class BaseModel(models.Model):
         if not self.pk:
             self.created_by=operating_user
             super().save(*args, **kwargs)
-    """
+ 
     def delete(self,*args, **kwargs):
         self.status=False
         self.save(*args, **kwargs)
